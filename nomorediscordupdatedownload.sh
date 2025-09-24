@@ -6,7 +6,7 @@ localversion=$(cat /usr/share/discord/resources/build_info.json | jq .version | 
 
 onlineversion=$(curl -sI "$url" | grep location | awk '{print $2}' | sed -E 's|.*discord-([0-9.]+)\.deb|\1|');
 
-if [[ "$localversion" == "$onlineversion" ]]; then
+if [ "$(echo "$localversion" | tr -d '\r\n')" = "$(echo "$onlineversion" | tr -d '\r\n')" ]; then
   discord;
 else
   curl -L --output install.deb "$url";
